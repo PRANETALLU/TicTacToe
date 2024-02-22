@@ -40,6 +40,13 @@ def determineWinner(player: int):
 while True:
     row = input('Enter a row (0 to 2) : ')
     column = input('Enter a column (0 to 2) : ')
+    if board[int(row)][int(column)] != 0:
+        print('Not valid input')
+        print(board[0])
+        print(board[1])
+        print(board[2])
+        print('')
+        continue 
     board[int(row)][int(column)] = 1
     c += 1
     if determineWinner(1):
@@ -52,14 +59,14 @@ while True:
     boardNumpy = np.array(board)
     boardNumpyFlatten = boardNumpy.flatten()
     boardNumpyFlattenRe = boardNumpyFlatten.reshape((1, -1))
-    print('boardNumpyFlattenRe:\n', boardNumpyFlattenRe)
+    #print('boardNumpyFlattenRe:\n', boardNumpyFlattenRe)
     index = mlpClassifier.predict(boardNumpyFlattenRe)
     
-    print('Computer Index: ', len(index))
+    #print('Computer Index: ', len(index))
     row1 = index[0] // 3
     col1 = index[0] % 3
-    print('Row ', int(row1))
-    print('Column ', int(col1))
+    #print('Row ', int(row1))
+    #print('Column ', int(col1))
     board[int(row1)][int(col1)] = -1
     c += 1
     if determineWinner(-1):
