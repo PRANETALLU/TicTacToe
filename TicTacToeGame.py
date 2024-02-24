@@ -1,6 +1,10 @@
 import numpy as np
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.linear_model import LinearRegression
 
 c = 0; 
 
@@ -15,16 +19,30 @@ B = np.loadtxt("datasets-part1/tictac_single.txt")
 X = B[:, :9]
 Y = B[:, 9:]
 
-mlpClassifier = MLPClassifier()
-mlpClassifier.fit(X, Y); 
-
 # Multi Label
 C = np.loadtxt("datasets-part1/tictac_multi.txt")
 X1 = C[:, :9]
 Y1 = C[:, 9:]
 
-kNeigh = KNeighborsRegressor(n_neighbors=3)
-kNeigh.fit(X1, Y1)
+# Classifiers
+svcClassifier = SVC(kernel='linear')
+svcClassifier.fit(X, Y)
+
+kNeighClassifier = KNeighborsClassifier(n_neighbors=3)
+kNeighClassifier.fit(X, Y)
+
+mlpClassifier = MLPClassifier(hidden_layer_sizes=(100, 50), alpha=0.0001, max_iter=300)
+mlpClassifier.fit(X, Y)
+
+# Regressors
+kNeighReg = KNeighborsRegressor(n_neighbors=3)
+kNeighReg.fit(X1, Y1)
+
+linReg = LinearRegression()
+linReg.fit(X1, Y1)
+
+mlpReg = MLPRegressor(hidden_layer_sizes=(100, 50), alpha=0.0001, max_iter=300)
+mlpReg.fit(X1, Y1)
 
 def determineWinner(player: int):
     if board[0][0] == board[0][1] == board[0][2] and board[0][0] == player:
@@ -86,7 +104,7 @@ while True:
     boardNumpy1 = np.array(board)
     boardNumpyFlatten1 = boardNumpy1.flatten()
     boardNumpyFlattenRe1 = boardNumpyFlatten1.reshape((1, -1))
-    availableInd = kNeigh.predict(boardNumpyFlattenRe1)
+    availableInd = kNeighReg.predict(boardNumpyFlattenRe1)
     availableInd = availableInd.flatten()
    
     newIndex = np.argsort(availableInd)
