@@ -102,7 +102,7 @@ while True:
         printBoard()
         break
     
-    elif num == 3:
+    if num == 1:
         # Single Label
         boardNumpy = np.array(board)
         boardNumpyFlatten = boardNumpy.flatten()
@@ -124,7 +124,7 @@ while True:
         col1 = index[0] % 3
         board[int(row1)][int(col1)] = -1
         c += 1
-    elif num == 2:
+    elif num == 3:
         # Single Label
         boardNumpy = np.array(board)
         boardNumpyFlatten = boardNumpy.flatten()
