@@ -71,6 +71,19 @@ def printBoard():
     print('')
     
 
+num = 0
+while True:
+    try:
+        num = int(input("Please enter an integer between 1 and 6:\n1. KNN Classifier\n2. MLP Classifier\n3. SVC Classifier\n4. KNN Regressor\n5. MLP Regressor\n6. SVC Regressor\n"))
+        if 1 <= num <= 6:
+            print("You entered:", num)
+            break
+        else:
+            print("Input must be between 1 and 6.")
+    except ValueError:
+        print("Invalid input. Please enter an integer.")
+
+
 while True:
     row = input('Enter a row (0 to 2) : ')
     column = input('Enter a column (0 to 2) : ')
@@ -89,32 +102,88 @@ while True:
         printBoard()
         break
     
-    # Single Label
-    """boardNumpy = np.array(board)
-    boardNumpyFlatten = boardNumpy.flatten()
-    boardNumpyFlattenRe = boardNumpyFlatten.reshape((1, -1))
-    index = mlpClassifier.predict(boardNumpyFlattenRe)
-    
-    row1 = index[0] // 3
-    col1 = index[0] % 3
-    board[int(row1)][int(col1)] = -1
-    c += 1"""
-    
-    # Multi Label
-    boardNumpy1 = np.array(board)
-    boardNumpyFlatten1 = boardNumpy1.flatten()
-    boardNumpyFlattenRe1 = boardNumpyFlatten1.reshape((1, -1))
-    availableInd = kNeighReg.predict(boardNumpyFlattenRe1)
-    availableInd = availableInd.flatten()
-   
-    newIndex = np.argsort(availableInd)
-    reverseIndex = newIndex[::-1]
-    
-    for index in reverseIndex:
-        if board[index // 3][index % 3] == 0:
-            board[index // 3][index % 3] = -1
-            c += 1
-            break
+    if num == 1:
+        # Single Label
+        boardNumpy = np.array(board)
+        boardNumpyFlatten = boardNumpy.flatten()
+        boardNumpyFlattenRe = boardNumpyFlatten.reshape((1, -1))
+        index = kNeighClassifier.predict(boardNumpyFlattenRe)
+
+        row1 = index[0] // 3
+        col1 = index[0] % 3
+        board[int(row1)][int(col1)] = -1
+        c += 1
+    elif num == 2:
+        # Single Label
+        boardNumpy = np.array(board)
+        boardNumpyFlatten = boardNumpy.flatten()
+        boardNumpyFlattenRe = boardNumpyFlatten.reshape((1, -1))
+        index = mlpClassifier.predict(boardNumpyFlattenRe)
+
+        row1 = index[0] // 3
+        col1 = index[0] % 3
+        board[int(row1)][int(col1)] = -1
+        c += 1
+    elif num == 3:
+        # Single Label
+        boardNumpy = np.array(board)
+        boardNumpyFlatten = boardNumpy.flatten()
+        boardNumpyFlattenRe = boardNumpyFlatten.reshape((1, -1))
+        index = svcClassifier.predict(boardNumpyFlattenRe)
+
+        row1 = index[0] // 3
+        col1 = index[0] % 3
+        board[int(row1)][int(col1)] = -1
+        c += 1
+    elif num == 4:
+        # Multi Label
+        boardNumpy1 = np.array(board)
+        boardNumpyFlatten1 = boardNumpy1.flatten()
+        boardNumpyFlattenRe1 = boardNumpyFlatten1.reshape((1, -1))
+        availableInd = kNeighReg.predict(boardNumpyFlattenRe1)
+        availableInd = availableInd.flatten()
+
+        newIndex = np.argsort(availableInd)
+        reverseIndex = newIndex[::-1]
+
+        for index in reverseIndex:
+            if board[index // 3][index % 3] == 0:
+                board[index // 3][index % 3] = -1
+                c += 1
+                break
+    elif num == 5:
+        # Multi Label
+        boardNumpy1 = np.array(board)
+        boardNumpyFlatten1 = boardNumpy1.flatten()
+        boardNumpyFlattenRe1 = boardNumpyFlatten1.reshape((1, -1))
+        availableInd = mlpReg.predict(boardNumpyFlattenRe1)
+        availableInd = availableInd.flatten()
+
+        newIndex = np.argsort(availableInd)
+        reverseIndex = newIndex[::-1]
+
+        for index in reverseIndex:
+            if board[index // 3][index % 3] == 0:
+                board[index // 3][index % 3] = -1
+                c += 1
+                break
+    elif num == 6:
+        # Multi Label
+        boardNumpy1 = np.array(board)
+        boardNumpyFlatten1 = boardNumpy1.flatten()
+        boardNumpyFlattenRe1 = boardNumpyFlatten1.reshape((1, -1))
+        availableInd = linReg.predict(boardNumpyFlattenRe1)
+        availableInd = availableInd.flatten()
+
+        newIndex = np.argsort(availableInd)
+        reverseIndex = newIndex[::-1]
+
+        for index in reverseIndex:
+            if board[index // 3][index % 3] == 0:
+                board[index // 3][index % 3] = -1
+                c += 1
+                break
+
     
     if determineWinner(-1):
         print('Computer Player won')
