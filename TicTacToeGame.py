@@ -74,7 +74,7 @@ def printBoard():
 num = 0
 while True:
     try:
-        num = int(input("Please enter an integer between 1 and 6:\n1. KNN Classifier\n2. MLP Classifier\n3. SVC Classifier\n4. KNN Regressor\n5. MLP Regressor\n6. SVC Regressor\n"))
+        num = int(input("Please enter an integer between 1 and 6:\n1. KNN Classifier\n2. MLP Classifier\n3. SVC Classifier\n4. KNN Regressor\n5. MLP Regressor\n6. Linear Regression\n"))
         if 1 <= num <= 6:
             print("You entered:", num)
             break
